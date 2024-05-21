@@ -38,5 +38,6 @@ return { -- Collection of various small independent plugins/modules
 		require("mini.bracketed").setup()
 		require("mini.jump").setup()
 		require("mini.tabline").setup()
+		require("mini.starter").setup()
 	end,
 }
