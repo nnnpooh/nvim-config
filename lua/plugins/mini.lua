@@ -39,5 +39,7 @@ return { -- Collection of various small independent plugins/modules
 		require("mini.jump").setup()
 		require("mini.tabline").setup()
 		require("mini.starter").setup()
+		require("mini.indentscope").setup()
+		require("mini.pairs").setup()
 	end,
 }
