@@ -2,8 +2,12 @@ return { -- Autocompletion
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
 		-- Snippet Engine & its associated nvim-cmp source
+		-- Adds other completion capabilities.
+		--  nvim-cmp does not ship with all sources by default. They are split
+		--  into multiple repos for maintenance purposes.
+		-- NOTE: (NR) I moved this one up so that the LSP suggestion will come first.
+		"hrsh7th/cmp-nvim-lsp",
 		{
 			"L3MON4D3/LuaSnip",
 			build = (function()
@@ -28,11 +32,6 @@ return { -- Autocompletion
 			},
 		},
 		"saadparwaiz1/cmp_luasnip",
-
-		-- Adds other completion capabilities.
-		--  nvim-cmp does not ship with all sources by default. They are split
-		--  into multiple repos for maintenance purposes.
-		-- 'hrsh7th/cmp-nvim-lsp',
 		"hrsh7th/cmp-path",
 	},
 	config = function()
