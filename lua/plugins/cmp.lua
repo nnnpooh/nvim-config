@@ -118,7 +118,9 @@ return { -- Autocompletion
 				-- Manually trigger a completion from nvim-cmp.
 				--  Generally you don't need this, because nvim-cmp will display
 				--  completions whenever it has completion options available.
-				["<C-Space>"] = cmp.mapping.complete({}),
+				-- ["<C-Space>"] = cmp.mapping.complete({}),
+				-- NOTE: (NR) I cannot make CTRL SPACE work so I change to something else for now.
+				["<C-c>"] = cmp.mapping.complete({}),
 
 				-- Think of <c-l> as moving to the right of your snippet expansion.
 				--  So if you have a snippet that's like:
@@ -165,6 +167,14 @@ return { -- Autocompletion
 			}, {
 				{ name = "cmdline" },
 			}),
+			matching = { disallow_symbol_nonprefix_matching = false },
+		})
+
+		cmp.setup.cmdline({ "/", "?" }, {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "buffer" },
+			},
 		})
 	end,
 }
