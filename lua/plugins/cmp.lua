@@ -1,3 +1,32 @@
+local cmp_kinds = {
+	Text = "  ",
+	Method = "  ",
+	Function = "  ",
+	Constructor = "  ",
+	Field = "  ",
+	Variable = "  ",
+	Class = "  ",
+	Interface = "  ",
+	Module = "  ",
+	Property = "  ",
+	Unit = "  ",
+	Value = "  ",
+	Enum = "  ",
+	Keyword = "  ",
+	Snippet = "  ",
+	Color = "  ",
+	File = "  ",
+	Reference = "  ",
+	Folder = "  ",
+	EnumMember = "  ",
+	Constant = "  ",
+	Struct = "  ",
+	Event = "  ",
+	Operator = "  ",
+	TypeParameter = "  ",
+	Copilot = "  ",
+}
+
 return { -- Autocompletion
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
@@ -28,6 +57,23 @@ return { -- Autocompletion
 					end,
 				},
 			},
+			config = function()
+				local types = require("luasnip.util.types")
+				require("luasnip").setup({
+					history = true,
+					delete_check_events = "TextChanged",
+					-- Display a cursor-like placeholder in unvisited nodes
+					-- of the snippet.
+					ext_opts = {
+						[types.insertNode] = {
+							unvisited = {
+								virt_text = { { "|", "Conceal" } },
+								virt_text_pos = "inline",
+							},
+						},
+					},
+				})
+			end,
 		},
 		"saadparwaiz1/cmp_luasnip",
 		"hrsh7th/cmp-path",
@@ -102,6 +148,13 @@ return { -- Autocompletion
 				{ name = "buffer" },
 				{ name = "nvim_lua" },
 				{ name = "path" },
+			},
+			-- Add icons to the completion menu.
+			formatting = {
+				format = function(_, vim_item)
+					vim_item.kind = (cmp_kinds[vim_item.kind] or "") .. vim_item.kind
+					return vim_item
+				end,
 			},
 		})
 
