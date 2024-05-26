@@ -120,7 +120,7 @@ return { -- Autocompletion
 				--  completions whenever it has completion options available.
 				-- ["<C-Space>"] = cmp.mapping.complete({}),
 				-- NOTE: (NR) I cannot make CTRL SPACE work so I change to something else for now.
-				["<C-c>"] = cmp.mapping.complete({}),
+				["<C-x>"] = cmp.mapping.complete({}),
 
 				-- Think of <c-l> as moving to the right of your snippet expansion.
 				--  So if you have a snippet that's like:
