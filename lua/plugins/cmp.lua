@@ -6,8 +6,6 @@ return { -- Autocompletion
 		-- Adds other completion capabilities.
 		--  nvim-cmp does not ship with all sources by default. They are split
 		--  into multiple repos for maintenance purposes.
-		-- NOTE: (NR) I moved this one up so that the LSP suggestion will come first.
-		"hrsh7th/cmp-nvim-lsp",
 		{
 			"L3MON4D3/LuaSnip",
 			build = (function()
@@ -23,16 +21,20 @@ return { -- Autocompletion
 				-- `friendly-snippets` contains a variety of premade snippets.
 				--    See the README about individual language/framework/plugin snippets:
 				--    https://github.com/rafamadriz/friendly-snippets
-				-- {
-				--   'rafamadriz/friendly-snippets',
-				--   config = function()
-				--     require('luasnip.loaders.from_vscode').lazy_load()
-				--   end,
-				-- },
+				{
+					"rafamadriz/friendly-snippets",
+					config = function()
+						require("luasnip.loaders.from_vscode").lazy_load()
+					end,
+				},
 			},
 		},
 		"saadparwaiz1/cmp_luasnip",
 		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-cmdline",
+		"hrsh7th/cmp-nvim-lua",
 	},
 	config = function()
 		-- See `:help cmp`
@@ -97,8 +99,19 @@ return { -- Autocompletion
 			sources = {
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
+				{ name = "buffer" },
+				{ name = "nvim_lua" },
 				{ name = "path" },
 			},
+		})
+
+		cmp.setup.cmdline(":", {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = cmp.config.sources({
+				{ name = "path" },
+			}, {
+				{ name = "cmdline" },
+			}),
 		})
 	end,
 }
