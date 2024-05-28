@@ -32,7 +32,7 @@ return { -- Collection of various small independent plugins/modules
 		end
 
 		require("mini.files").setup()
-		vim.keymap.set("n", "<leader>ff", ":lua MiniFiles.open()<CR>", { silent = true, desc = "Open Files" })
+		vim.keymap.set("n", "<leader>ft", ":lua MiniFiles.open()<CR>", { silent = true, desc = "Open Files" })
 
 		-- require("mini.animate").setup()
 		require("mini.bracketed").setup()
