@@ -42,5 +42,6 @@ return { -- Collection of various small independent plugins/modules
 		require("mini.indentscope").setup()
 		require("mini.pairs").setup()
 		require("mini.animate").setup()
+		require("mini.bufremove").setup()
 	end,
 }
