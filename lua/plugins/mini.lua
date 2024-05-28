@@ -41,5 +41,6 @@ return { -- Collection of various small independent plugins/modules
 		require("mini.starter").setup()
 		require("mini.indentscope").setup()
 		require("mini.pairs").setup()
+		require("mini.animate").setup()
 	end,
 }
