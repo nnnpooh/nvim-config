@@ -24,12 +24,17 @@ return {
 		-- Add your own debuggers here
 		"leoluz/nvim-dap-go",
 
+		-- Not sure what this does
 		"theHamsta/nvim-dap-virtual-text",
+
+		-- VsCode launch.json parser
+		-- { "folke/neoconf.nvim", opts = {} },
 	},
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
 
+		require("mason").setup()
 		require("mason-nvim-dap").setup({
 			-- Makes a best effort to setup the various debuggers with
 			-- reasonable debug configurations
@@ -47,17 +52,17 @@ return {
 			},
 		})
 
-		require("nvim-dap-virtual-text").setup()
+		require("nvim-dap-virtual-text").setup({})
 
 		-- Basic debugging keymaps, feel free to change to your liking!
-		vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
-		vim.keymap.set("n", "<F1>", dap.step_into, { desc = "Debug: Step Into" })
-		vim.keymap.set("n", "<F2>", dap.step_over, { desc = "Debug: Step Over" })
-		vim.keymap.set("n", "<F3>", dap.step_out, { desc = "Debug: Step Out" })
-		vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
-		vim.keymap.set("n", "<leader>B", function()
-			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-		end, { desc = "Debug: Set Breakpoint" })
+		-- vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
+		-- vim.keymap.set("n", "<F1>", dap.step_into, { desc = "Debug: Step Into" })
+		-- vim.keymap.set("n", "<F2>", dap.step_over, { desc = "Debug: Step Over" })
+		-- vim.keymap.set("n", "<F3>", dap.step_out, { desc = "Debug: Step Out" })
+		-- vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+		-- vim.keymap.set("n", "<leader>B", function()
+		-- 	dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+		-- end, { desc = "Debug: Set Breakpoint" })
 
 		-- Dap UI setup
 		-- For more information, see |:help nvim-dap-ui|
@@ -81,6 +86,13 @@ return {
 			},
 		})
 
+		vim.keymap.set("n", "<leader>du", function()
+			dapui.toggle({})
+		end, { desc = "Dap UI" })
+		vim.keymap.set({ "n", "v" }, "<leader>de", function()
+			dapui.eval()
+		end, { desc = "Eval" })
+
 		-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
 		vim.keymap.set("n", "<F7>", dapui.toggle, { desc = "Debug: See last session result." })
 
@@ -96,5 +108,39 @@ return {
 				detached = vim.fn.has("win32") == 0,
 			},
 		})
+
+		-- Copy from https://www.lazyvim.org/extras/dap/core
+		-- setup dap config by VsCode launch.json file
+		-- local vscode = require("dap.ext.vscode")
+		-- local _filetypes = require("mason-nvim-dap.mappings.filetypes")
+		-- local filetypes = vim.tbl_deep_extend("force", _filetypes, {
+		-- 	["node"] = { "javascriptreact", "typescriptreact", "typescript", "javascript" },
+		-- 	["pwa-node"] = { "javascriptreact", "typescriptreact", "typescript", "javascript" },
+		-- })
+		-- local json = require("plenary.json")
+		-- vscode.json_decode = function(str)
+		-- 	return vim.json.decode(json.json_strip_comments(str))
+		-- end
+		-- vscode.load_launchjs(nil, filetypes)
 	end,
+	  -- stylua: ignore
+	keys = {
+		{ "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
+		{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+		{ "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+		{ "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
+		{ "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
+		{ "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
+		{ "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
+		{ "<leader>dj", function() require("dap").down() end, desc = "Down" },
+		{ "<leader>dk", function() require("dap").up() end, desc = "Up" },
+		{ "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
+		{ "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
+		{ "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
+		{ "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
+		{ "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+		{ "<leader>ds", function() require("dap").session() end, desc = "Session" },
+		{ "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
+		{ "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+	},
 }
